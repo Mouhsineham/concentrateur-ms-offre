@@ -1,0 +1,127 @@
+# ===================================================================
+# Spring Boot configuration.
+#
+# This configuration is used for unit/integration tests.
+#
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+spring:
+  application:
+    name: boundedcontext
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:boundedcontext;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    name:
+    username:
+    password:
+    hikari:
+      auto-commit: false
+  jpa:
+    database-platform: com.sofrecom.sofid.framework.domain.util.FixedH2Dialect
+    database: H2
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.hbm2ddl.auto: validate
+      hibernate.jdbc.time_zone: UTC
+  data:
+    elasticsearch:
+      properties:
+        path:
+          home: target/elasticsearch
+  liquibase:
+      contexts: test
+  mail:
+    host: localhost
+  main:
+    allow-bean-definition-overriding: true
+  messages:
+    basename: i18n/messages
+  mvc:
+    favicon:
+      enabled: false
+  task:
+    execution:
+      thread-name-prefix: boundedcontext-task-
+      pool:
+        core-size: 1
+        max-size: 50
+        queue-capacity: 10000
+    scheduling:
+      thread-name-prefix: boundedcontext-scheduling-
+      pool:
+        size: 1
+  thymeleaf:
+    mode: HTML
+  cloud:
+    stream:
+      default-binder: test
+  batch:
+    job:
+      enabled: false
+  autoconfigure:
+      exclude: com.github.vanroy.springboot.autoconfigure.data.jest.ElasticsearchJestAutoConfiguration,org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration,org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration,org.springframework.cloud.stream.test.binder.TestSupportBinderAutoConfiguration
+server:
+  port: 10344
+  address: localhost
+
+
+
+sofid:
+  clientApp:
+    name: 'BoundedContextApp'
+  logging:
+    # To test json console appender
+    use-json-format: true # By default, logs are in Json format
+    # To test logstash appender
+    logstash:
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
+        base64-secret: YzUwOTY4NzlkOGQ4Nzc4YTBjNGQ3OTc2N2E5NDJjODE5OGZlYTY1OGNkNjBhNzQzNjMzYzllZjRhZDQ3NzgxODhiOGVhYjVkYmUyZTdiMmEyY2VlMTU2OTY5NWYwNzdhMzJlZGIwNmFjMjBkYWQxMWM5MDQ5MjAxZjNmOTE3OTE=
+        # Token is valid 24 hours
+        token-validity-in-seconds: 86400
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: true
+      report-frequency: 60 # in seconds
+
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the SofidProperties above
+#
+# ===================================================================
+
+# application:
+boundedcontext:
+  bulk:
+    import:
+      upload:
+        # directory used to save files used in bulk creation/update or suppression. This directory is also used to save error files
+        directory:
+          # root path
+          root: C:/g6
+          # relative path starting from the root
+          relative: /boundedcontext/import/

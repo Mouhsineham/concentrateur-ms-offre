@@ -1,0 +1,14 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+
+    <changeSet author="sofrecom" id="database-initialization" context="dev, test">
+        <sqlFile dbms="h2"
+                 encoding="utf8"
+                 endDelimiter=";"
+                 path="config/sql/db_init.sql"
+                 splitStatements="true"/>
+    </changeSet>
+</databaseChangeLog>

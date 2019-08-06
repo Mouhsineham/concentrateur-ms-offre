@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: $MICROSERVICE
+  labels:
+    app: $MICROSERVICE
+spec:
+#  type: NodePort
+  ports:
+    - name: $MICROSERVICE
+      port: $PORT
+#      targetPort: $MICROSERVICE
+      protocol: TCP
+#      nodePort: 32006
+  selector:
+    app: $MICROSERVICE
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $MICROSERVICE
+  labels:
+    app: $MICROSERVICE
+    track: stable
+  annotations:
+    commit-ref: $CI_COMMIT_REF_NAME
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: $MICROSERVICE
+  template:
+    metadata:
+      annotations:
+        commit-ref: $CI_COMMIT_REF_NAME
+      labels:
+        app: $MICROSERVICE
+        track: stable
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+      - name: $MICROSERVICE
+        image: $REGISTRY_pull/$TAG
+        imagePullPolicy: Always
+        ports:
+        - name: $MICROSERVICE
+          containerPort: $PORT
+        volumeMounts:
+        - name: exports-persistent-storage
+          mountPath: /app/exports
+      volumes:
+      - name: exports-persistent-storage
+        hostPath:
+          path: /openebs/exports
+          type: Directory

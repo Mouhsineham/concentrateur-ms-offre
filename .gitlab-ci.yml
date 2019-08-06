@@ -1,0 +1,81 @@
+variables:
+  GIT_REPO: "https://smnomadg6.sofrecom.fr/sofid/sofid-common.git"
+  MAVEN_USER_HOME: "/opt/maven-home/"
+  SONAR_PROJECT_NAME: "project-demo"
+  MICROSERVICE: users
+  ARTIFACTID: sofid-msxx
+  VERSION: 1.0.0
+  PORT: 30000
+  REGISTRY_push: "10.242.146.134:8083"
+  REGISTRY_pull: "10.242.146.134:8082"
+  TAG: "$ARTIFACTID:$VERSION"
+  NEXUS_USER: "nexus"
+  NEXUS_PASSWD: "nexus123"
+  SONAR_URL: "http://10.242.146.136:9000"
+  SONAR_LOGIN: "909af1d39aabd7d2ed433519f21f909a1db21b2a"
+
+stages:
+  - build
+  - unitTest
+  - sonarAnalysis
+  - intTest
+  - package
+  - dockerImage
+  - deploy
+
+build:
+  stage: build
+  script:
+    - mvn  -Pprod compile  -Dmaven.repo.local="$MAVEN_USER_HOME" -DskipTests=true
+  only:
+    - master
+    - merge_requests
+
+unitTest:
+  stage: unitTest
+  script:
+    - mvn test -Dmaven.repo.local="$MAVEN_USER_HOME"
+  only:
+    - master
+    - merge_requests
+
+sonarAnalysis:
+  stage: sonarAnalysis
+  script:
+    - mvn -e verify sonar:sonar -Dsonar.host.url=$SONAR_URL -Dsonar.login=$SONAR_LOGIN -Dsonar.gitlab.project_id=$CI_PROJECT_PATH -Dsonar.gitlab.commit_sha=$CI_COMMIT_SHA -Dsonar.gitlab.ref_name=$CI_COMMIT_REF_NAME -Dmaven.repo.local="$MAVEN_USER_HOME"
+  only:
+    - master
+    - merge_requests
+
+integrationTest:
+  stage: intTest
+  script:
+    - mvn test -DskipTests=true -Dmaven.repo.local="$MAVEN_USER_HOME"
+    - echo "test"
+  only:
+    - master
+
+package:
+  stage: package
+  script:
+    - mvn  -Pprod install -DskipTests=true -Dmaven.repo.local="$MAVEN_USER_HOME"
+  only:
+    - val_k8s
+
+dockerImage:
+  stage: dockerImage
+  script:
+    - cp Dockerfile /opt/maven-home/ && cd /opt/maven-home
+    - docker build --build-arg microservice="$MICROSERVICE"  --build-arg artifactid="$ARTIFACTID" --build-arg version="$VERSION"  --build-arg port="$PORT"    -t "$TAG" .
+    - docker tag "$TAG" "$REGISTRY_push/$TAG"
+    - docker login -u "$NEXUS_USER" -p "$NEXUS_PASSWD" "$REGISTRY_push"
+    - docker push "$REGISTRY_push/$TAG"
+  only:
+    - val_k8s
+
+deploy_live:
+  stage: deploy
+  only:
+    - val_k8s
+  script:
+    - envsubst < deployment-manifest.yaml | kubectl apply -f -
