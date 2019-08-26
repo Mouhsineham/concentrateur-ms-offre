@@ -42,7 +42,7 @@ spring:
     stream:
       kafka:
         binder:
-          brokers: broker
+          brokers: kafka-cluster
           defaultBrokerPort: 9092
           zkNodes: zookeeper
           defaultZkPort: 2181
@@ -58,9 +58,9 @@ spring:
         
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:mariadb://10.242.146.136:3306/user_management_demo?useLegacyDatetimeCode=false&serverTimezone=UTC
-    username: admin_nomad
-    password: admin_nomad
+    url: jdbc:mariadb://10.242.146.136:3306/xxxxxxxxxx?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: xxxxxx
+    password: xxxxxx
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -126,7 +126,7 @@ spring:
 #        ciphers: TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_DHE_RSA_WITH_AES_128_GCM_SHA256 ,TLS_DHE_RSA_WITH_AES_256_GCM_SHA384 ,TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256,TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384,TLS_DHE_RSA_WITH_AES_128_CBC_SHA256,TLS_DHE_RSA_WITH_AES_128_CBC_SHA,TLS_DHE_RSA_WITH_AES_256_CBC_SHA256,TLS_DHE_RSA_WITH_AES_256_CBC_SHA,TLS_RSA_WITH_AES_128_GCM_SHA256,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_CBC_SHA256,TLS_RSA_WITH_AES_256_CBC_SHA256,TLS_RSA_WITH_AES_128_CBC_SHA,TLS_RSA_WITH_AES_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_RSA_WITH_CAMELLIA_256_CBC_SHA,TLS_DHE_RSA_WITH_CAMELLIA_128_CBC_SHA,TLS_RSA_WITH_CAMELLIA_128_CBC_SHA
 # ===================================================================
 server:
-  port: 30000
+  port: XXXXX
   compression:
     enabled: true
     mime-types: text/html,text/xml,text/plain,text/css, application/javascript, application/json
