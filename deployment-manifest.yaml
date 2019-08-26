@@ -32,7 +32,7 @@ spec:
   template:
     metadata:
       annotations:
-        commit-ref: $CI_COMMIT_REF_NAME
+        commit-ref: $CI_COMMIT_SHA
       labels:
         app: $MICROSERVICE
         track: stable
