@@ -4,6 +4,10 @@ metadata:
   name: $MICROSERVICE
   labels:
     app: $MICROSERVICE
+  annotations:
+    prometheus.io/scrape: 'true'
+    prometheus.io/port: '$PORT'
+    prometheus.io/path: '/management/metrics'
 spec:
 #  type: NodePort
   ports:
