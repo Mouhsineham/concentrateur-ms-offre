@@ -39,12 +39,15 @@ public class OffreProcessResource  {
     	return ResponseEntity.ok(offreProcess.getPartant(id));
     }
     
-    
+    //get Courses
     @GetMapping("/courses")
     public  ResponseEntity<Object> getCourses() {
     	return new ResponseEntity<Object>(offreProcess.getCourses(), HttpStatus.OK);
     	
     }
+    
+    
+   
     
   
 
