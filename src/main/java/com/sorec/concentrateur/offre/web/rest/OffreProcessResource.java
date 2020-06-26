@@ -25,7 +25,6 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping(value = "/api/v1/offre", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @RestController
 public class OffreProcessResource  {
-
     /**
      * OffreProcess process dependency.
      */
