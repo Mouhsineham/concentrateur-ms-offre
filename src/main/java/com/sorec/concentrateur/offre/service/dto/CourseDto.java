@@ -1,9 +1,9 @@
 package com.sorec.concentrateur.offre.service.dto;
 
-import java.util.Objects;
+ 
 
 import com.sorec.concentrateur.offre.domain.Course;
-import io.swagger.annotations.ApiModel;
+
 import io.swagger.annotations.ApiModelProperty;
  
 import lombok.AllArgsConstructor;
@@ -11,7 +11,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
-import javax.validation.Valid;
+import java.util.*;
+ 
 
 
 /**
@@ -79,6 +80,19 @@ public class CourseDto   {
   public static void copy(CourseDto from, Course to) {
       to.setIdCourse(from.getIdCourse());
       // ...
+  }
+  
+  
+  public static List<CourseDto> mapCoursesResponse(List<Course> courses) {
+      if ( courses == null ) {
+          return null;
+      }
+
+      List<CourseDto> list = new ArrayList<CourseDto>( courses.size() );
+      for ( Course course : courses ) {
+          list.add( from( course ) );
+      }
+      return list;
   }
 
 }

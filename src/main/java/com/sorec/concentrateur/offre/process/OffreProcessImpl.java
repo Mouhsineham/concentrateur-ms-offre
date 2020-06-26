@@ -1,5 +1,7 @@
 package com.sorec.concentrateur.offre.process;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sorec.concentrateur.framework.i18n.CustomMessageSource;
+import com.sorec.concentrateur.offre.domain.Course;
 import com.sorec.concentrateur.offre.service.BoundedContextService;
 import com.sorec.concentrateur.offre.service.OffreService;
 import com.sorec.concentrateur.offre.service.dto.BoundedContextDto;
@@ -41,8 +44,6 @@ public class OffreProcessImpl implements OffreProcess {
     @Autowired
     OffreService offreService;
 
-
-
 	@Override
 	public BoundedContextDto get(@NotNull Integer id) {
 		return BoundedContextDto.from(boundedContextService.get(id));
@@ -65,4 +66,14 @@ public class OffreProcessImpl implements OffreProcess {
 	public  ProduitInCourseDto getProduitInCourse(@NotNull Integer id) {
 	 	return ProduitInCourseDto.from(offreService.getProduitInCourse(id));
 	}
+
+
+	@Override
+	public List<CourseDto> getCourses() {
+		// TODO Auto-generated method stub
+		return CourseDto.mapCoursesResponse(offreService.getCourses());
+	}
+	
+	
+	
    }

@@ -1,5 +1,7 @@
 
 package com.sorec.concentrateur.offre.process;
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
 import com.sorec.concentrateur.offre.service.dto.BoundedContextDto;
@@ -15,6 +17,8 @@ public interface OffreProcess {
 	    PartantDto getPartant(@NotNull Integer id);
 	    CourseDto  getCourse(@NotNull Integer id);
 	    ProduitInCourseDto getProduitInCourse(@NotNull Integer id);
+	       
+	    List<CourseDto>  getCourses();
 	
 
 }

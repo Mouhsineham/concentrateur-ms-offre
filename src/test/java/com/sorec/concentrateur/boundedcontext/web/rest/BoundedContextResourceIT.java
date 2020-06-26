@@ -45,7 +45,7 @@ import com.sorec.concentrateur.offre.process.OffreProcess;
 import com.sorec.concentrateur.offre.remote.service.ReferenceDataClient;
 import com.sorec.concentrateur.offre.repository.BoundedContextRepository;
 import com.sorec.concentrateur.offre.service.BoundedContextService;
-import com.sorec.concentrateur.offre.web.rest.BoundedContextResource;
+//import com.sorec.concentrateur.offre.web.rest.BoundedContextResource;
 
 
 @RunWith(SpringRunner.class)
@@ -103,26 +103,26 @@ public class BoundedContextResourceIT {
         Mockito.when(referenceDataClient.select(5, null, Arrays.asList(4), null)).thenReturn(Arrays.asList(SelectItemDto.from(4, "Point of sales")));
     }
 
-    @Before
-    public void setup() {
-        MockitoAnnotations.initMocks(this);
-        final BoundedContextResource userResource = new BoundedContextResource(userProcess);
-        this.mockMvc = MockMvcBuilders.standaloneSetup(userResource)
-                .setCustomArgumentResolvers(pageableArgumentResolver)
-                .setControllerAdvice(restErrorHandler)
-                .setConversionService(createFormattingConversionService())
-                .setMessageConverters(jacksonMessageConverter)
-                .setValidator(validator).build();
-
-        BoundedContext boundedcontext = userService.get(1);
-        UserPrincipal userPrincipal = new UserPrincipal(boundedcontext.getId(),boundedcontext.getUsername()
-        ,new HashSet<>());
-        AuthenticationToken authenticationToken =
-                new AuthenticationToken("jwt",null);
-        authenticationToken.setAuthenticated(true);
-        authenticationToken.setUserPrincipal(userPrincipal);
-        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-    }
+//    @Before
+//    public void setup() {
+//        MockitoAnnotations.initMocks(this);
+//        final BoundedContextResource userResource = new BoundedContextResource(userProcess);
+//        this.mockMvc = MockMvcBuilders.standaloneSetup(userResource)
+//                .setCustomArgumentResolvers(pageableArgumentResolver)
+//                .setControllerAdvice(restErrorHandler)
+//                .setConversionService(createFormattingConversionService())
+//                .setMessageConverters(jacksonMessageConverter)
+//                .setValidator(validator).build();
+//
+//        BoundedContext boundedcontext = userService.get(1);
+//        UserPrincipal userPrincipal = new UserPrincipal(boundedcontext.getId(),boundedcontext.getUsername()
+//        ,new HashSet<>());
+//        AuthenticationToken authenticationToken =
+//                new AuthenticationToken("jwt",null);
+//        authenticationToken.setAuthenticated(true);
+//        authenticationToken.setUserPrincipal(userPrincipal);
+//        SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+//    }
 
  
     /**

@@ -5,6 +5,7 @@ import static com.sorec.concentrateur.offre.exception.CourseException.Error.COUR
 import static com.sorec.concentrateur.offre.exception.PartantException.Error.PARTANT_NOT_FOUND;
 import static com.sorec.concentrateur.offre.exception.ProduitInCourseException.Error.PRODUIT_NOT_FOUND;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
@@ -22,10 +23,7 @@ import com.sorec.concentrateur.offre.exception.ProduitInCourseException;
 import com.sorec.concentrateur.offre.repository.CourseRepository;
 import com.sorec.concentrateur.offre.repository.PartantRepository;
 import com.sorec.concentrateur.offre.repository.ProduitInCourseRepository;
-import com.sorec.concentrateur.offre.service.dto.BoundedContextDto;
-import com.sorec.concentrateur.offre.service.dto.CourseDto;
-import com.sorec.concentrateur.offre.service.dto.PartantDto;
-import com.sorec.concentrateur.offre.service.dto.ProduitInCourseDto;
+
 
 @Service
 @Transactional
@@ -67,6 +65,17 @@ public class OffreServiceImpl implements OffreService{
 			throw new ProduitInCourseException(PRODUIT_NOT_FOUND);
 		}
 		return produit.get();
+	}
+
+
+	@Override
+	public List<Course> getCourses() {
+		
+		List<Course> courses  = courseRepository.findAll();
+		if(courses.isEmpty()) {
+			throw new ProduitInCourseException(PRODUIT_NOT_FOUND);
+		}
+		return courses;
 	}
 
 
