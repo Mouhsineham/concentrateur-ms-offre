@@ -39,13 +39,6 @@ import com.sorec.concentrateur.framework.context.UserPrincipal;
 import com.sorec.concentrateur.framework.dto.SelectItemDto;
 import com.sorec.concentrateur.framework.exception.RestErrorHandler;
 import com.sorec.concentrateur.framework.security.configuration.api.AuthenticationToken;
-import com.sorec.concentrateur.offre.domain.BoundedContext;
-import com.sorec.concentrateur.offre.messaging.service.MessagingService;
-import com.sorec.concentrateur.offre.process.OffreProcess;
-import com.sorec.concentrateur.offre.remote.service.ReferenceDataClient;
-import com.sorec.concentrateur.offre.repository.BoundedContextRepository;
-import com.sorec.concentrateur.offre.service.BoundedContextService;
-//import com.sorec.concentrateur.offre.web.rest.BoundedContextResource;
 
 
 @RunWith(SpringRunner.class)
@@ -59,13 +52,13 @@ public class BoundedContextResourceIT {
     private MockMvc mockMvc;
 
     @Autowired
-    OffreProcess userProcess;
+    com.sorec.concentrateur.offre.process.BoundedContextProcess userProcess;
 
     @Autowired
-    BoundedContextService userService;
+    com.sorec.concentrateur.offre.service.BoundedContextService userService;
 
     @Autowired
-    BoundedContextRepository userRepository;
+    com.sorec.concentrateur.offre.repository.BoundedContextRepository userRepository;
 
     @Autowired
     ObjectMapper mapper;
@@ -86,10 +79,10 @@ public class BoundedContextResourceIT {
     private PageableHandlerMethodArgumentResolver pageableArgumentResolver;
 
     @MockBean
-    ReferenceDataClient referenceDataClient;
+    com.sorec.concentrateur.offre.remote.service.ReferenceDataClient referenceDataClient;
 
     @MockBean
-    MessagingService messagingService;
+    com.sorec.concentrateur.offre.messaging.service.MessagingService messagingService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -106,7 +99,7 @@ public class BoundedContextResourceIT {
 //    @Before
 //    public void setup() {
 //        MockitoAnnotations.initMocks(this);
-//        final BoundedContextResource userResource = new BoundedContextResource(userProcess);
+//        final BoundedContextResourceIT userResource = new BoundedContextResource(userProcess);
 //        this.mockMvc = MockMvcBuilders.standaloneSetup(userResource)
 //                .setCustomArgumentResolvers(pageableArgumentResolver)
 //                .setControllerAdvice(restErrorHandler)
@@ -114,7 +107,7 @@ public class BoundedContextResourceIT {
 //                .setMessageConverters(jacksonMessageConverter)
 //                .setValidator(validator).build();
 //
-//        BoundedContext boundedcontext = userService.get(1);
+//        com.sorec.concentrateur.offre.domain.BoundedContext boundedcontext = userService.get(1);
 //        UserPrincipal userPrincipal = new UserPrincipal(boundedcontext.getId(),boundedcontext.getUsername()
 //        ,new HashSet<>());
 //        AuthenticationToken authenticationToken =
