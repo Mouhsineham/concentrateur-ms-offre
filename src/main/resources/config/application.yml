@@ -80,8 +80,6 @@ management:
 spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchAutoConfiguration,org.springframework.boot.autoconfigure.data.elasticsearch.ElasticsearchDataAutoConfiguration
-  application:
-    name: boundedcontext
   cloud:
     consul:
       discovery:
@@ -102,7 +100,7 @@ spring:
     properties:
       hibernate.jdbc.time_zone: UTC
     hibernate:
-      ddl-auto: none
+      ddl-auto: update
       naming:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
@@ -115,17 +113,16 @@ spring:
       enabled: false
   task:
     execution:
-      thread-name-prefix: blog-task-
+      thread-name-prefix: concentrateur-task-
       pool:
         core-size: 2
         max-size: 50
         queue-capacity: 10000
     scheduling:
-      thread-name-prefix: blog-scheduling-
+      thread-name-prefix: concentrateur-scheduling-
       pool:
         size: 2
-  thymeleaf:
-    mode: HTML
+
   
 server:
   servlet:
@@ -137,9 +134,9 @@ server:
 info:
   # Comma separated list of profiles that will trigger the ribbon to show
   display-ribbon-on-profiles: 'dev'
-sofid:
+concentrateur:
   clientApp:
-    name: 'blogApp'
+    name: 'concentrateurApp'
   # By default CORS is disabled. Uncomment to enable.
   # cors:
   #     allowed-origins: "*"
@@ -149,11 +146,11 @@ sofid:
   #     allow-credentials: true
   #     max-age: 1800
   mail:
-    from: blog@localhost
+    from: concentrateur@localhost
   swagger:
     default-include-pattern: /api/.*
-    title: BoundedContext API
-    description: This page documents BoundedContext RESTful web services for managing boundedContext.
+    title: Offre API
+    description: This page documents Offre RESTful web services for managing offre.
     version: 0.0.1
     terms-of-service-url:
     contact-name:
@@ -165,7 +162,7 @@ sofid:
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the SofidProperties above
+# to have type-safe configuration, like in the ConcentrateurProperties above
 #
 # ===================================================================
 

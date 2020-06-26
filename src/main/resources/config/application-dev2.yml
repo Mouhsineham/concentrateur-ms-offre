@@ -1,0 +1,141 @@
+# ===================================================================
+# Spring Boot configuration for the "dev" profile.
+#
+# This configuration overrides the application.yml file.
+#
+# ===================================================================
+
+# ===================================================================
+# Standard Spring Boot properties.
+# Full reference is available at:
+# http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# ===================================================================
+
+logging:
+  level:
+    ROOT: INFO
+    com.sorec.concentrateur: DEBUG
+
+spring:
+  application:
+    name: boundedcontext
+  profiles:
+    active: dev
+    include:
+      - swagger
+      # Uncomment to activate TLS for the dev profile
+      #- tls
+  jackson:
+    serialization:
+      indent-output: true
+  cloud:
+    consul:
+      discovery:
+        prefer-ip-address: true
+        instanceId: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+      host: localhost
+      port: 8500
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:h2:mem:boundedcontext;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    name:
+    username:
+    password:
+    hikari:
+      auto-commit: false
+  jpa:
+    database-platform: com.sorec.concentrateur.framework.domain.util.FixedH2Dialect
+    database: H2
+    open-in-view: false
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+    properties:
+      hibernate.id.new_generator_mappings: true
+      hibernate.connection.provider_disables_autocommit: true
+      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_query_cache: false
+      hibernate.generate_statistics: false
+      hibernate.hbm2ddl.auto: validate
+      hibernate.jdbc.time_zone: UTC
+  
+  liquibase:
+    contexts: dev
+  mail:
+    host: localhost
+    port: 25
+    username:
+    password:
+  messages:
+    cache-duration: PT1S # 1 second, see the ISO 8601 standard
+  sleuth:
+    sampler:
+      probability: 1 # report 100% of traces
+  zipkin: # Use the "zipkin" Maven profile to have the Spring Cloud Zipkin dependencies
+    base-url: http://localhost:9411
+    enabled: false
+    locator:
+      discovery:
+        enabled: true
+    
+server:
+  port: 8082
+
+
+concentrateur:
+  cache: # Cache configuration
+    hazelcast: # Hazelcast distributed cache
+      time-to-live-seconds: 3600
+      backup-count: 1
+      management-center: # Full reference is available at: http://docs.hazelcast.org/docs/management-center/3.9/manual/html/Deploying_and_Starting.html
+        enabled: false
+        update-interval: 3
+        url: http://localhost:8180/mancenter
+  # CORS is disabled by default on microservices, as you should access them through a gateway.
+  # If you want to enable it, please uncomment the configuration below.
+  # cors:
+  #     allowed-origins: "*"
+  #     allowed-methods: "*"
+  #     allowed-headers: "*"
+  #     exposed-headers: "Authorization,Link,X-Total-Count"
+  #     allow-credentials: true
+  #     max-age: 1800
+  security:
+    authentication:
+      jwt:
+        # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
+        base64-secret: YzUwOTY4NzlkOGQ4Nzc4YTBjNGQ3OTc2N2E5NDJjODE5OGZlYTY1OGNkNjBhNzQzNjMzYzllZjRhZDQ3NzgxODhiOGVhYjVkYmUyZTdiMmEyY2VlMTU2OTY5NWYwNzdhMzJlZGIwNmFjMjBkYWQxMWM5MDQ5MjAxZjNmOTE3OTE=
+        # Token is valid 24 hours
+        token-validity-in-minute: 480
+  mail: # specific concentrateur mail property, for standard properties see MailProperties
+    from: boundedcontext@localhost
+    base-url: http://127.0.0.1:8081
+  metrics:
+    logs: # Reports metrics in the logs
+      enabled: false
+      report-frequency: 60 # in seconds
+  logging:
+    use-json-format: false # By default, logs are not in Json format
+    logstash: # Forward logs to logstash over a socket, used by LoggingConfiguration
+      enabled: false
+      host: localhost
+      port: 5000
+      queue-size: 512
+  # Thread pool that will be used for asynchronous method calls in concentrateur
+  async:
+   core-pool-size: 2 # Initial pool size
+   max-pool-size: 50 # Maximum pool size
+   queue-capacity: 10000 # Queue capacity of the pool
+# ===================================================================
+# Application specific properties
+# Add your own application properties here, see the ApplicationProperties class
+# to have type-safe configuration, like in the ConcentrateurProperties above
+#
+# ===================================================================
+
+# application:
+application:

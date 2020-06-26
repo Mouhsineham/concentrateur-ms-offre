@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: sofid__CI_BUILD_REF_SLUG__
-  namespace: sofid
+  name: concentrateur__CI_BUILD_REF_SLUG__
+  namespace: concentrateur
   labels:
-    app: sofid__CI_BUILD_REF_SLUG__
+    app: concentrateur__CI_BUILD_REF_SLUG__
 #  annotations:
 #    prometheus.io/scrape: "true"
 #    prometheus.io/port: "$PORT"
@@ -19,4 +19,4 @@ spec:
 #      protocol: TCP
       nodePort: 30000
   selector:
-    app: sofid__CI_BUILD_REF_SLUG__
+    app: concentrateur__CI_BUILD_REF_SLUG__

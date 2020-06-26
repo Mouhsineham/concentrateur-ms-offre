@@ -4,9 +4,9 @@
 <configuration scan="true">
     <include resource="org/springframework/boot/logging/logback/base.xml"/>
 
-    <logger name="com.sofrecom.sofid.boundedcontext" level="DEBUG"/>
+    <logger name="com.sorec.concentrateur.boundedcontext" level="DEBUG"/>
 
-    <logger name="com.sofrecom.sofid" level="DEBUG"/>
+    <logger name="com.sorec.concentrateur" level="DEBUG"/>
 
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.mail" level="WARN"/>

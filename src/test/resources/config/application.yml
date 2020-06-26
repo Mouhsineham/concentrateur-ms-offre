@@ -23,7 +23,7 @@ spring:
     hikari:
       auto-commit: false
   jpa:
-    database-platform: com.sofrecom.sofid.framework.domain.util.FixedH2Dialect
+    database-platform: com.sorec.concentrateur.framework.domain.util.FixedH2Dialect
     database: H2
     open-in-view: false
     show-sql: false
@@ -83,7 +83,7 @@ server:
 
 
 
-sofid:
+concentrateur:
   clientApp:
     name: 'BoundedContextApp'
   logging:
@@ -101,7 +101,7 @@ sofid:
         # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
         base64-secret: YzUwOTY4NzlkOGQ4Nzc4YTBjNGQ3OTc2N2E5NDJjODE5OGZlYTY1OGNkNjBhNzQzNjMzYzllZjRhZDQ3NzgxODhiOGVhYjVkYmUyZTdiMmEyY2VlMTU2OTY5NWYwNzdhMzJlZGIwNmFjMjBkYWQxMWM5MDQ5MjAxZjNmOTE3OTE=
         # Token is valid 24 hours
-        token-validity-in-seconds: 86400
+        token-validity-in-minute: 480
   metrics:
     logs: # Reports metrics in the logs
       enabled: true
@@ -110,18 +110,8 @@ sofid:
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the SofidProperties above
+# to have type-safe configuration, like in the ConcentrateurProperties above
 #
 # ===================================================================
 
 # application:
-boundedcontext:
-  bulk:
-    import:
-      upload:
-        # directory used to save files used in bulk creation/update or suppression. This directory is also used to save error files
-        directory:
-          # root path
-          root: C:/g6
-          # relative path starting from the root
-          relative: /boundedcontext/import/

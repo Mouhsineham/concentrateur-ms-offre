@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.sofrecom.sofid</groupId>
-    <artifactId>sofid-msxx</artifactId>
+    <groupId>com.sorec.concentrateur</groupId>
+    <artifactId>concentrateur-ms-offre</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
-    <name>BoundedContext</name>
+    <name>ms-offre</name>
 
     <properties>
         <!-- Build properties -->
@@ -29,7 +29,7 @@
         <profile.tls/>
 
         <!-- Dependency versions -->
-        <sofid-dependencies.version>1.0.0</sofid-dependencies.version>
+        <concentrateur-dependencies.version>1.0.0</concentrateur-dependencies.version>
         <spring-boot.version>2.1.4.RELEASE</spring-boot.version>
         <!-- The hibernate version should match the one managed by https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-dependencies/${spring-boot.version} -->
         <hibernate.version>5.3.9.Final</hibernate.version>
@@ -48,7 +48,7 @@
         <maven-javadoc-plugin.version>3.1.0</maven-javadoc-plugin.version>
         <maven-eclipse-plugin.version>2.10</maven-eclipse-plugin.version>
         <!-- We can't go to 3.0.0-M2 as it has a regression. See https://issues.apache.org/jira/browse/MENFORCER-306 -->
-        <maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version>
+        <!--<maven-enforcer-plugin.version>3.0.0-M1</maven-enforcer-plugin.version> -->
         <maven-failsafe-plugin.version>3.0.0-M3</maven-failsafe-plugin.version>
         <maven-idea-plugin.version>2.2.1</maven-idea-plugin.version>
         <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
@@ -70,9 +70,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.sofrecom.sofid</groupId>
-                <artifactId>sofid-dependencies</artifactId>
-                <version>${sofid-dependencies.version}</version>
+                <groupId>com.sorec.concentrateur</groupId>
+                <artifactId>concentrateur-dependencies</artifactId>
+                <version>${concentrateur-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -81,8 +81,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.sofrecom.sofid</groupId>
-            <artifactId>sofid-framework</artifactId>
+            <groupId>com.sorec.concentrateur</groupId>
+            <artifactId>concentrateur-framework</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -206,30 +206,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-elasticsearch</artifactId>
-        </dependency>
-        <!-- Spring Data Jest dependencies for Elasticsearch -->
-        <dependency>
-            <groupId>com.github.vanroy</groupId>
-            <artifactId>spring-boot-starter-data-jest</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>commons-logging</groupId>
-                    <artifactId>commons-logging</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <!-- log4j2-mock needed to create embedded elasticsearch instance with
-            SLF4J -->
-        <dependency>
-            <groupId>de.dentrassi.elasticsearch</groupId>
-            <artifactId>log4j2-mock</artifactId>
-            <version>${log4j2-mock.version}</version>
-            <scope>runtime</scope>
-        </dependency>
-        <!-- end of Spring Data Jest dependencies -->
+      
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
@@ -347,37 +324,8 @@
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
         </dependency>
-        <!-- Kafka support -->
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.cloud</groupId>
-                    <artifactId>
-                        spring-cloud-function-context
-                    </artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-function-context</artifactId>
-            <version>2.1.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-binder-kafka-streams</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-binder-kafka</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-test-support</artifactId>
-            <scope>test</scope>
-        </dependency>
+        
+    
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-zipkin</artifactId>
@@ -418,7 +366,7 @@
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
-                            <version>1.16.18</version>
+                            <version>1.18.12</version>
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
@@ -598,7 +546,7 @@
                             <image>openjdk:11-jre-slim-stretch</image>
                         </from>
                         <to>
-                            <image>boundedcontext:latest</image>
+                            <image>ms-offre:latest</image>
                         </to>
                         <container>
                             <entrypoint>
@@ -614,7 +562,7 @@
                             </ports>
                             <environment>
                                 <SPRING_OUTPUT_ANSI_ENABLED>ALWAYS</SPRING_OUTPUT_ANSI_ENABLED>
-                                <NOMADE_SLEEP>0</NOMADE_SLEEP>
+                                <CONCENTRATEUR_SLEEP>0</CONCENTRATEUR_SLEEP>
                             </environment>
                             <useCurrentTimestamp>true</useCurrentTimestamp>
                         </container>
@@ -630,12 +578,12 @@
                             ${project.basedir}/src/main/resources/config/liquibase/changelog/${maven.build.timestamp}_changelog.xml
                         </diffChangeLogFile>
                         <driver>org.h2.Driver</driver>
-                        <url>jdbc:h2:file:${project.build.directory}/h2db/db/boundedcontext</url>
+                        <url>jdbc:h2:file:${project.build.directory}/h2db/db/offre</url>
                         <defaultSchemaName></defaultSchemaName>
-                        <username>boundedcontext</username>
+                        <username>offre</username>
                         <password></password>
                         <referenceUrl>
-                            hibernate:spring:com.sofrecom.sofid.boundedcontext.domain?dialect=org.hibernate.dialect.H2Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+                            hibernate:spring:com.sorec.concentrateur.offre.domain?dialect=org.hibernate.dialect.H2Dialect&amp;hibernate.physical_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy&amp;hibernate.implicit_naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
                         </referenceUrl>
                         <verbose>true</verbose>
                         <logging>debug</logging>
@@ -677,7 +625,7 @@
                         <downloadJavadocs>true</downloadJavadocs>
                     </configuration>
                 </plugin>
-                <plugin>
+<!--                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-enforcer-plugin</artifactId>
                     <version>${maven-enforcer-plugin.version}</version>
@@ -705,7 +653,7 @@
                             </requireJavaVersion>
                         </rules>
                     </configuration>
-                </plugin>
+                </plugin> -->
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-idea-plugin</artifactId>

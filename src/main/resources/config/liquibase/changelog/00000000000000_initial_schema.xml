@@ -4,8 +4,8 @@
    http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
 
-    <changeSet author="sofrecom" id="database-initialization" context="dev, test">
-        <sqlFile dbms="h2"
+    <changeSet author="pcdata" id="database-initialization" context="dev, test">
+        <sqlFile dbms="h2,mariadb"
                  encoding="utf8"
                  endDelimiter=";"
                  path="config/sql/db_init.sql"

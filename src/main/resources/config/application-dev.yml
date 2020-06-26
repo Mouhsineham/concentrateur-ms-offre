@@ -13,27 +13,18 @@
 
 logging:
   level:
-    ROOT: DEBUG
-    com.sofrecom.sofid.framework: DEBUG
-    com.sofrecom.sofid.boundedcontext: DEBUG
-    org.apache.kafka: WARN
-    org.springframework.integration: WARN
+    ROOT: INFO
+    com.sorec.concentrateur: DEBUG
 
 spring:
   application:
-    name: boundedcontext
+    name: offre
   profiles:
     active: dev
     include:
       - swagger
       # Uncomment to activate TLS for the dev profile
       #- tls
-  devtools:
-    restart:
-      enabled: true
-      additional-exclude: .h2.server.properties
-    livereload:
-      enabled: false # we use Webpack dev server + BrowserSync for livereload
   jackson:
     serialization:
       indent-output: true
@@ -45,53 +36,35 @@ spring:
         service-name: ${spring.application.name}
       host: localhost
       port: 8500
-    stream:
-      kafka:
-        streams:
-          binder:
-            brokers: localhost
-            configuration:
-              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-              default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
-      bindings:
-        userChannel-out:
-          destination: boundedcontext-topic
-          content-type: application/json
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:h2:mem:boundedcontext;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
-    name:
-    username:
-    password:
+    url: jdbc:mariadb://127.0.0.1:3306/mydb?useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: 
     hikari:
+      poolName: Hikari
       auto-commit: false
+      data-source-properties:
+        cachePrepStmts: true
+        prepStmtCacheSize: 250
+        prepStmtCacheSqlLimit: 2048
+        useServerPrepStmts: true
   jpa:
-    database-platform: com.sofrecom.sofid.framework.domain.util.FixedH2Dialect
-    database: H2
-    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: MYSQL
     show-sql: false
-    hibernate:
-      ddl-auto: none
-      naming:
-        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
-        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
     properties:
       hibernate.id.new_generator_mappings: true
       hibernate.connection.provider_disables_autocommit: true
-      hibernate.cache.use_second_level_cache: false
+      hibernate.cache.use_second_level_cache: true
       hibernate.cache.use_query_cache: false
       hibernate.generate_statistics: false
-      hibernate.hbm2ddl.auto: validate
-      hibernate.jdbc.time_zone: UTC
+      hibernate.cache.region.factory_class: com.hazelcast.hibernate.HazelcastCacheRegionFactory
+      hibernate.cache.hazelcast.instance_name: refData
+      hibernate.cache.use_minimal_puts: true
+      hibernate.cache.hazelcast.use_lite_member: true
+
   
-  
-  data:
-    elasticsearch:
-      properties:
-        path:
-          home: target/elasticsearch
-    jest:
-      uri: http://localhost:9200
   liquibase:
     contexts: dev
   mail:
@@ -101,8 +74,6 @@ spring:
     password:
   messages:
     cache-duration: PT1S # 1 second, see the ISO 8601 standard
-  thymeleaf:
-    cache: false
   sleuth:
     sampler:
       probability: 1 # report 100% of traces
@@ -117,7 +88,7 @@ server:
   port: 8082
 
 
-sofid:
+concentrateur:
   cache: # Cache configuration
     hazelcast: # Hazelcast distributed cache
       time-to-live-seconds: 3600
@@ -141,10 +112,9 @@ sofid:
         # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
         base64-secret: YzUwOTY4NzlkOGQ4Nzc4YTBjNGQ3OTc2N2E5NDJjODE5OGZlYTY1OGNkNjBhNzQzNjMzYzllZjRhZDQ3NzgxODhiOGVhYjVkYmUyZTdiMmEyY2VlMTU2OTY5NWYwNzdhMzJlZGIwNmFjMjBkYWQxMWM5MDQ5MjAxZjNmOTE3OTE=
         # Token is valid 24 hours
-        token-validity-in-seconds: 86400
-        token-validity-in-seconds-for-remember-me: 2592000
-  mail: # specific Sofid mail property, for standard properties see MailProperties
-    from: boundedcontext@localhost
+        token-validity-in-minute: 480
+  mail: # specific concentrateur mail property, for standard properties see MailProperties
+    from: offre@localhost
     base-url: http://127.0.0.1:8081
   metrics:
     logs: # Reports metrics in the logs
@@ -157,7 +127,7 @@ sofid:
       host: localhost
       port: 5000
       queue-size: 512
-  # Thread pool that will be used for asynchronous method calls in Sofid
+  # Thread pool that will be used for asynchronous method calls in concentrateur
   async:
    core-pool-size: 2 # Initial pool size
    max-pool-size: 50 # Maximum pool size
@@ -165,7 +135,7 @@ sofid:
 # ===================================================================
 # Application specific properties
 # Add your own application properties here, see the ApplicationProperties class
-# to have type-safe configuration, like in the SofidProperties above
+# to have type-safe configuration, like in the ConcentrateurProperties above
 #
 # ===================================================================
 
