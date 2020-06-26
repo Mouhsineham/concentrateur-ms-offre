@@ -45,14 +45,14 @@ import com.sorec.concentrateur.offre.process.OffreProcess;
 import com.sorec.concentrateur.offre.remote.service.ReferenceDataClient;
 import com.sorec.concentrateur.offre.repository.BoundedContextRepository;
 import com.sorec.concentrateur.offre.service.BoundedContextService;
-import com.sorec.concentrateur.offre.web.rest.BoundedContextResource;
+
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = OffreApp.class)
 @AutoConfigureMockMvc
 @InitTestDB
-public class BoundedContextResourceIT {
+public class BoundedContextResource {
 
 
     @Autowired
