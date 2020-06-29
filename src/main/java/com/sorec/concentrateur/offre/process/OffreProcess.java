@@ -15,10 +15,13 @@ public interface OffreProcess {
 	
 	    BoundedContextDto get(@NotNull Integer id);
 	    PartantDto getPartant(@NotNull Integer id);
-	    CourseDto  getCourse(@NotNull Integer id);
 	    ProduitInCourseDto getProduitInCourse(@NotNull Integer id);
 	       
 	    List<CourseDto>  getCourses();
+	    CourseDto  addCourse(@NotNull CourseDto coursedto);
+	    CourseDto  getCourse(@NotNull Integer id);
+	    void  deleteCourse(@NotNull Integer id);
+
 	
 
 }

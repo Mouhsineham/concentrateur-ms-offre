@@ -74,6 +74,20 @@ public class OffreProcessImpl implements OffreProcess {
 		return CourseDto.mapCoursesResponse(offreService.getCourses());
 	}
 	
+	@Override
+	public CourseDto addCourse(@NotNull CourseDto coursedto) {
+		Course course = offreService.addCourse(CourseDto.to(coursedto));
+		return CourseDto.from(course);
+	}
+
+
+	@Override
+	public void deleteCourse(@NotNull Integer id) {
+		offreService.deleteCourse(id);
+	}
+
+	
+	
 	
 	
    }

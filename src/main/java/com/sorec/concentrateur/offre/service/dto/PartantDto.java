@@ -2,6 +2,8 @@ package com.sorec.concentrateur.offre.service.dto;
 
 
 
+import java.util.Date;
+
 import javax.validation.Valid;
 
 import com.sorec.concentrateur.offre.domain.Partant;
@@ -34,7 +36,7 @@ public class PartantDto   {
   private Integer idPartant;
 
   @ApiModelProperty(value = "numPartant")
-  private String numPartant;
+  private Integer numPartant;
 
   @ApiModelProperty(value = "nomPartant")
   private String nomPartant;
@@ -44,6 +46,10 @@ public class PartantDto   {
 
   @ApiModelProperty(value = "ecurieFg")
   private Integer ecurieFg;
+  
+  private Date datePartantCheval;
+  
+
 
   public PartantDto idPartant(Integer idPartant) {
     this.idPartant = idPartant;
@@ -60,8 +66,15 @@ public class PartantDto   {
       return builder.build();
   }
 
-  public static Partant to(Partant from) {
+  public static Partant to(PartantDto from) {
 	  Partant entity = new Partant();
+	  entity.setIdPartant(from.idPartant);
+	  entity.setEcurie(from.ecurie);
+	  entity.setDatePartantCheval(from.datePartantCheval);
+	  entity.setEcurieFg(from.getEcurieFg());
+	  entity.setEstPartantCheval(from.estPartantCheval);
+	  entity.setNomPartant(from.nomPartant);
+	  entity.setNumPartant(from.numPartant);
   	//....
       return entity;
   }

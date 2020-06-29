@@ -23,6 +23,7 @@ import com.sorec.concentrateur.offre.exception.ProduitInCourseException;
 import com.sorec.concentrateur.offre.repository.CourseRepository;
 import com.sorec.concentrateur.offre.repository.PartantRepository;
 import com.sorec.concentrateur.offre.repository.ProduitInCourseRepository;
+import com.sorec.concentrateur.offre.service.dto.CourseDto;
 
 
 @Service
@@ -76,6 +77,19 @@ public class OffreServiceImpl implements OffreService{
 			throw new ProduitInCourseException(PRODUIT_NOT_FOUND);
 		}
 		return courses;
+	}
+
+
+	@Override
+	public Course addCourse(@NotNull Course coursedto) {
+		// TODO Auto-generated method stub
+		return courseRepository.save(coursedto);
+	}
+
+
+	@Override
+	public void deleteCourse(@NotNull Integer id) {
+		 courseRepository.deleteById(id);
 	}
 
 
